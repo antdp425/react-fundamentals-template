@@ -9,15 +9,20 @@ function UsernameForm({onSubmitUsername}) {
   // `event.preventDefault()` to prevent the default behavior of form submit
   // events (which refreshes the page).
   const userInput = React.useRef()
-  const submitButton = React.useRef()
-  const [errorMessage, setErrorMessage] = React.useState()
+  const [userName, setUserName] = React.useState('')
+  // Uncontrolled Form
+  // const [errorMessage, setErrorMessage] = React.useState()
 
-  function validateInput(){
-    let isLowerCase = userInput.current.value === userInput.current.value.toLowerCase()
-    setErrorMessage(isLowerCase ? null : "You may only use lowercase letters")
+  function validateInput() {
+    // Uncontrolled Form
+    // setErrorMessage(isLowerCase ? null : "You may only use lowercase letters")
   }
 
-  function handleSubmit(event){
+  function handleUserNameChange(){
+    setUserName(userInput.current.value.toLowerCase())
+  }
+
+  function handleSubmit(event) {
     event.preventDefault()
     // onSubmitUsername(event.target[0].value)
     // with Ref
@@ -35,14 +40,24 @@ function UsernameForm({onSubmitUsername}) {
   // to do so, set the value of 'htmlFor' prop of the label to the id of input
   return (
     <>
-    <small style={{color: "red"}}>{errorMessage}</small>
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label htmlFor="usernameInput">Username:</label>
-        <input onChange={() => validateInput()} ref={userInput} type="text" />
-      </div>
-      <button disabled={!!errorMessage} type="submit">Submit</button>
-    </form>
+    {/* Used for Uncontrolled Form */}
+      {/* <small style={{color: 'red'}}>{errorMessage}</small> */}
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label htmlFor="usernameInput">Username:</label>
+          <input
+            onChange={handleUserNameChange}
+            ref={userInput}
+            value={userName}
+            type="text"
+          />
+        </div>
+        {/* Untrolled Form */}
+        {/* <button disabled={!!errorMessage} type="submit"> */}
+        <button type="submit">
+          Submit
+        </button>
+      </form>
     </>
   )
 }
